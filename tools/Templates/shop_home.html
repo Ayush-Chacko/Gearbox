@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workshop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">GEARBOX</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+          <li class="nav-item"><a class="btn btn-danger" href="#">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="container text-center py-5">
+    <h1 class="display-4 fw-bold">Welcome to the Workshop</h1>
+    <p class="lead text-muted mb-4">Build smarter with precision-crafted tools.</p>
+    <a href="#tools" class="btn btn-primary btn-lg">Explore Tools</a>
+  </section>
+
+  <!-- Add Tool Form -->
+  <section class="container py-5">
+    <h2 class="mb-4">Add a New Tool</h2>
+    <form method="post" class="row g-3">
+      {% csrf_token %}
+      <div class="col-md-4">
+        {{ form.icon_class.label_tag }}
+        {{ form.icon_class }}
+      </div>
+      <div class="col-md-4">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+      </div>
+      <div class="col-md-4">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-plus-circle me-1"></i> Add Tool
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Tools Grid -->
+  <section id="tools" class="container py-5">
+    <div class="row g-4">
+      {% for tool in tools %}
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm text-center">
+            <div class="card-body">
+              <i class="bi {{ tool.icon_class }} display-4 text-primary mb-3"></i>
+              <h5 class="card-title">{{ tool.name }}</h5>
+              <p class="card-text text-muted">{{ tool.description }}</p>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-center text-muted">No tools available yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="text-center py-5 bg-primary text-white">
+    <h2 class="mb-3">Ready to Get Started?</h2>
+    <p class="mb-4">Discover tools that power your next project.</p>
+    <a href="#tools" class="btn btn-light btn-lg">Browse All Tools</a>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
